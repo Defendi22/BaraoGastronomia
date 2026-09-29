@@ -114,10 +114,11 @@ const testimonials = [
   },
 ];
 
+const fullLogo = "/images/logo-barao-completa-branco.png";
+
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 function useScrollReveal() {
   useEffect(() => {
-    const els = document.querySelectorAll(".reveal");
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -128,8 +129,31 @@ function useScrollReveal() {
       },
       { threshold: 0.12 }
     );
-    els.forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
+
+    const observeRevealElements = () => {
+      document.querySelectorAll(".reveal").forEach((el) => {
+        if (!(el instanceof HTMLElement)) return;
+        if (!el.classList.contains("visible")) {
+          obs.observe(el);
+        }
+      });
+    };
+
+    observeRevealElements();
+
+    const mutationObserver = new MutationObserver(() => {
+      observeRevealElements();
+    });
+
+    mutationObserver.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      obs.disconnect();
+      mutationObserver.disconnect();
+    };
   }, []);
 }
 
@@ -159,13 +183,13 @@ function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
         {/* Logo */}
-        <a href="#inicio" className="flex flex-col leading-none">
-          <span style={{ fontFamily: "'Playfair Display', serif", color: "#C9A84C", fontSize: "1.5rem", fontWeight: 700, letterSpacing: "0.04em" }}>
-            BARÃO
-          </span>
-          <span style={{ color: "#F8F3EE", fontSize: "0.65rem", letterSpacing: "0.35em", fontWeight: 300 }}>
-            GASTRONOMIA
-          </span>
+        <a href="#inicio" className="flex items-center justify-center leading-none" aria-label="Barão Gastronomia">
+          <img
+            src={fullLogo}
+            alt="Barão Gastronomia"
+            className="h-12 md:h-14 w-auto object-contain"
+            style={{ filter: "drop-shadow(0 6px 12px rgba(0,0,0,0.18))" }}
+          />
         </a>
 
         {/* Desktop Links */}
@@ -257,7 +281,7 @@ function Hero() {
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
+        style={{ backgroundImage: "url('/images/hero.jpeg')" }}
       />
       {/* Overlay */}
       <div className="absolute inset-0 hero-overlay" />
@@ -268,7 +292,7 @@ function Hero() {
           className="animate-fade-in-up text-xs tracking-[0.4em] uppercase mb-6 font-light"
           style={{ color: "#C9A84C", animationDelay: "0.2s", opacity: 0 }}
         >
-          Alta Gastronomia desde 2012
+          Restaurante familiar desde 2012
         </p>
 
         <h1
@@ -289,7 +313,7 @@ function Hero() {
           className="animate-fade-in-up text-lg md:text-xl font-light mb-10 max-w-xl mx-auto leading-relaxed"
           style={{ color: "rgba(248,243,238,0.85)", animationDelay: "0.6s", opacity: 0 }}
         >
-          Uma jornada sensorial onde cada prato conta uma história. Ingredientes selecionados, técnicas refinadas e uma atmosfera única.
+          Um lugar para receber bem, comer bem e aproveitar bons momentos ao lado de quem a gente gosta.
         </p>
 
         <div
@@ -383,8 +407,8 @@ function About() {
             className="text-4xl md:text-5xl font-bold mb-6 leading-tight"
             style={{ fontFamily: "'Playfair Display', serif", color: "#4A1020" }}
           >
-            Arte e Paixão em<br />
-            <em style={{ fontStyle: "italic", color: "#6B1A2A" }}>cada prato</em>
+            Sabor de casa<br />
+            <em style={{ fontStyle: "italic", color: "#6B1A2A" }}>com toque especial</em>
           </h2>
 
           <div className="divider-ornament mb-8" style={{ justifyContent: "flex-start" }}>
@@ -392,10 +416,10 @@ function About() {
           </div>
 
           <p className="text-base leading-relaxed mb-5" style={{ color: "#5a3a3a", fontWeight: 300 }}>
-            Fundado em 2012, o Barão Gastronomia nasceu do sonho de criar um espaço onde a alta culinária se encontra com a hospitalidade genuína brasileira. Nosso chef executivo, com passagens pelos melhores restaurantes da Europa, traz técnicas refinadas aliadas aos mais saborosos ingredientes regionais.
+            Fundado em 2012, o Barão nasceu para reunir o melhor da comida de qualidade com o acolhimento de um restaurante de família. Aqui, o cuidado com os ingredientes e a atenção ao cliente fazem toda a diferença.
           </p>
           <p className="text-base leading-relaxed mb-8" style={{ color: "#5a3a3a", fontWeight: 300 }}>
-            Cada detalhe é pensado para proporcionar uma experiência completa: do ambiente cuidadosamente decorado à carta de vinhos curada pelo nosso sommelier, tudo converge para momentos verdadeiramente memoráveis.
+            Nosso ambiente é descontraído, acolhedor e cheio de personalidade. A comida é saborosa, bem preparada e servida com calor humano, criando momentos simples, especiais e memoráveis para todos.
           </p>
 
           <div className="grid grid-cols-3 gap-4">
@@ -429,7 +453,7 @@ function Menu() {
         {/* Header */}
         <div className="text-center mb-16 reveal">
           <p className="text-xs tracking-[0.35em] uppercase mb-4 font-medium" style={{ color: "#C9A84C" }}>
-            Culinária de Excelência
+            Sabores que lembram casa
           </p>
           <h2
             className="text-4xl md:text-5xl font-bold mb-6"
@@ -800,12 +824,11 @@ function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Logo */}
           <div className="text-center md:text-left">
-            <p style={{ fontFamily: "'Playfair Display', serif", color: "#C9A84C", fontSize: "1.6rem", fontWeight: 700, letterSpacing: "0.05em" }}>
-              BARÃO
-            </p>
-            <p style={{ color: "rgba(248,243,238,0.4)", fontSize: "0.6rem", letterSpacing: "0.4em" }}>
-              GASTRONOMIA
-            </p>
+            <img
+              src={fullLogo}
+              alt="Barão Gastronomia"
+              className="h-16 md:h-20 w-auto object-contain"
+            />
           </div>
 
           {/* Links */}
