@@ -281,7 +281,7 @@ function Hero() {
       {/* Background image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/hero.jpeg')" }}
+        style={{ backgroundImage: "url('/images/hero16x9.png')" }}
       />
       {/* Overlay */}
       <div className="absolute inset-0 hero-overlay" />
@@ -519,6 +519,21 @@ function Menu() {
           ))}
         </div>
 
+        <div className="mt-12 flex justify-center reveal">
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent("navigate-to-menu"))}
+            className="px-8 py-4 rounded-full text-sm tracking-widest uppercase font-medium transition-all duration-300"
+            style={{
+              backgroundColor: "#C9A84C",
+              color: "#4A1020",
+              border: "2px solid #C9A84C",
+            }}
+          >
+            Cardápio Completo
+          </button>
+        </div>
+
         <div className="text-center mt-12 reveal">
           <p className="text-sm font-light" style={{ color: "rgba(248,243,238,0.5)" }}>
             * Cardápio sujeito à sazonalidade dos ingredientes
@@ -529,14 +544,86 @@ function Menu() {
   );
 }
 
+function MenuPage({ onBack }: { onBack: () => void }) {
+  return (
+    <div style={{ backgroundColor: "#F8F3EE", minHeight: "100vh" }}>
+      <header style={{ backgroundColor: "rgba(74, 16, 32, 0.97)" }} className="sticky top-0 z-30">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
+          <img src={fullLogo} alt="Barão Gastronomia" className="h-12 md:h-14 w-auto object-contain" />
+          <button
+            type="button"
+            onClick={onBack}
+            className="px-5 py-2 rounded-full text-xs tracking-widest uppercase font-medium"
+            style={{ border: "1px solid #C9A84C", color: "#C9A84C", backgroundColor: "transparent" }}
+          >
+            Voltar ao Site
+          </button>
+        </div>
+      </header>
+
+      <main className="max-w-6xl mx-auto px-6 py-12 md:py-20">
+        <div className="text-center mb-12">
+          <p className="text-xs tracking-[0.35em] uppercase mb-4 font-medium" style={{ color: "#C9A84C" }}>
+            Cardápio Completo
+          </p>
+          <h1
+            className="text-4xl md:text-6xl font-bold"
+            style={{ fontFamily: "'Playfair Display', serif", color: "#4A1020" }}
+          >
+            Sabores do Barão
+          </h1>
+          <div className="divider-ornament mt-6">
+            <span style={{ color: "#C9A84C", fontSize: "1.2rem" }}>✦</span>
+          </div>
+        </div>
+
+        <div className="space-y-10">
+          {menuItems.map((category) => (
+            <section key={category.category} className="rounded-3xl overflow-hidden shadow-lg" style={{ backgroundColor: "#fff", border: "1px solid rgba(107,26,42,0.1)" }}>
+              <div className="px-6 py-5 md:px-8" style={{ backgroundColor: "#4A1020" }}>
+                <h2
+                  className="text-2xl md:text-3xl font-bold"
+                  style={{ fontFamily: "'Playfair Display', serif", color: "#F8F3EE" }}
+                >
+                  {category.category}
+                </h2>
+              </div>
+
+              <div className="p-5 md:p-8 space-y-4">
+                {category.items.map((item) => (
+                  <div key={item.name} className="rounded-2xl p-5 md:p-6" style={{ backgroundColor: "#F8F3EE", border: "1px solid rgba(107,26,42,0.08)" }}>
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                      <div className="flex-1">
+                        <h3 className="text-xl font-semibold" style={{ fontFamily: "'Playfair Display', serif", color: "#4A1020" }}>
+                          {item.name}
+                        </h3>
+                        <p className="mt-2 text-sm leading-relaxed" style={{ color: "#5a3a3a", fontWeight: 300 }}>
+                          {item.desc}
+                        </p>
+                      </div>
+                      <span className="text-2xl font-bold whitespace-nowrap" style={{ fontFamily: "'Playfair Display', serif", color: "#6B1A2A" }}>
+                        {item.price}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </main>
+    </div>
+  );
+}
+
 function Gallery() {
   const images = [
     { src: "https://images.pexels.com/photos/37968303/pexels-photo-37968303.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", alt: "Mesa elegante com velas" },
-    { src: "/images/dish1.jpg", alt: "Prato principal" },
+    { src: "/images/galeria/dish1.jpg", alt: "Prato principal" },
     { src: "https://images.pexels.com/photos/10075346/pexels-photo-10075346.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", alt: "Vinho sendo servido" },
-    { src: "/images/dish2.jpg", alt: "Entrada especial" },
+    { src: "/images/galeria/dish2.jpg", alt: "Entrada especial" },
     { src: "https://images.pexels.com/photos/1872889/pexels-photo-1872889.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", alt: "Ambiente do restaurante" },
-    { src: "/images/dish3.jpg", alt: "Sobremesa especial" },
+    { src: "/images/galeria/dish3.jpg", alt: "Sobremesa especial" },
   ];
 
   return (
@@ -579,8 +666,23 @@ function Gallery() {
 
 function Testimonials() {
   return (
-    <section id="depoimentos" style={{ backgroundColor: "#6B1A2A" }} className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section id="depoimentos" className="relative overflow-hidden py-24 px-6" style={{ backgroundColor: "#6B1A2A" }}>
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/images/guardachuvas.png')",
+          opacity: 0.18,
+          backgroundPosition: "center",
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(180deg, rgba(74, 16, 32, 0.08) 0%, rgba(74, 16, 32, 0.66) 100%)",
+        }}
+      />
+
+      <div className="relative max-w-6xl mx-auto">
         <div className="text-center mb-16 reveal">
           <p className="text-xs tracking-[0.35em] uppercase mb-4 font-medium" style={{ color: "#C9A84C" }}>
             O que dizem nossos clientes
@@ -903,7 +1005,19 @@ function WhatsAppButton() {
 
 // ─── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
+  const [showMenuPage, setShowMenuPage] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setShowMenuPage(true);
+    window.addEventListener("navigate-to-menu", handler);
+    return () => window.removeEventListener("navigate-to-menu", handler);
+  }, []);
+
   useScrollReveal();
+
+  if (showMenuPage) {
+    return <MenuPage onBack={() => setShowMenuPage(false)} />;
+  }
 
   return (
     <div className="min-h-screen">
