@@ -50,12 +50,6 @@ const IconInstagram = () => (
   </svg>
 );
 
-const IconFacebook = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-  </svg>
-);
-
 const IconWhatsapp = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
@@ -115,6 +109,21 @@ const testimonials = [
 ];
 
 const fullLogo = "/images/logo-barao-completa-branco.png";
+const WHATSAPP_NUMBER = "5511954775288";
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+const INSTAGRAM_URL = "https://www.instagram.com/baraogastronomiaafabo/";
+const MAPS_QUERY = "1 Av. Comendador Hermes Traldi, Jundiaí, São Paulo";
+const MAPS_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAPS_QUERY)}`;
+const MAPS_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(MAPS_QUERY)}&output=embed`;
+const navigationLinks = [
+  { label: "Início", href: "#inicio" },
+  { label: "Sobre", href: "#sobre" },
+  { label: "Cardápio", href: "#cardapio" },
+  { label: "Galeria", href: "#galeria" },
+  { label: "Depoimentos", href: "#depoimentos" },
+  { label: "Reservas", href: "#reservas" },
+  { label: "Contato", href: "#contato" },
+];
 
 // ─── Hooks ────────────────────────────────────────────────────────────────────
 function useScrollReveal() {
@@ -169,8 +178,6 @@ function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const links = ["Início", "Sobre", "Cardápio", "Galeria", "Depoimentos", "Reservas"];
-
   return (
     <nav
       style={{
@@ -194,14 +201,14 @@ function Navbar() {
 
         {/* Desktop Links */}
         <ul className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <li key={l}>
+          {navigationLinks.map(({ label, href }) => (
+            <li key={href}>
               <a
-                href={`#${l.toLowerCase().replace("ú", "u").replace("ó", "o").replace("é", "e").replace("â", "a").replace("ê", "e").replace("ã", "a")}`}
+                href={href}
                 className="nav-link text-sm font-light tracking-widest uppercase"
                 style={{ color: "#F8F3EE" }}
               >
-                {l}
+                {label}
               </a>
             </li>
           ))}
@@ -244,15 +251,15 @@ function Navbar() {
         }}
       >
         <ul className="flex flex-col px-6 pb-6 gap-4">
-          {links.map((l) => (
-            <li key={l}>
+          {navigationLinks.map(({ label, href }) => (
+            <li key={href}>
               <a
-                href={`#${l.toLowerCase().replace("ú", "u").replace("ó", "o").replace("é", "e").replace("â", "a").replace("ê", "e").replace("ã", "a")}`}
+                href={href}
                 className="text-sm tracking-widest uppercase font-light"
                 style={{ color: "#F8F3EE" }}
                 onClick={() => setOpen(false)}
               >
-                {l}
+                {label}
               </a>
             </li>
           ))}
@@ -743,9 +750,21 @@ function Testimonials() {
 function Reservation() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", date: "", time: "", guests: "2", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const reservationMessage = [
+    "Olá! Gostaria de solicitar uma reserva:",
+    `Nome: ${form.name}`,
+    `E-mail: ${form.email}`,
+    `Telefone: ${form.phone || "Não informado"}`,
+    `Data: ${form.date}`,
+    `Horário: ${form.time}`,
+    `Pessoas: ${form.guests}`,
+    `Observações: ${form.message || "Nenhuma"}`,
+  ].join("\n");
+  const reservationWhatsappUrl = `${WHATSAPP_URL}?text=${encodeURIComponent(reservationMessage)}`;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    window.open(reservationWhatsappUrl, "_blank", "noopener,noreferrer");
     setSubmitted(true);
   };
 
@@ -789,11 +808,20 @@ function Reservation() {
               className="text-2xl font-bold mb-3"
               style={{ fontFamily: "'Playfair Display', serif", color: "#F8F3EE" }}
             >
-              Reserva Confirmada!
+              Solicitação pronta!
             </h3>
             <p style={{ color: "rgba(248,243,238,0.7)", fontWeight: 300 }}>
-              Obrigado, {form.name}! Entraremos em contato em breve para confirmar os detalhes.
+              Obrigado, {form.name}! Envie a mensagem pelo WhatsApp para concluir sua solicitação.
             </p>
+            <a
+              href={reservationWhatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-6 px-6 py-3 rounded-full text-sm tracking-widest uppercase font-semibold"
+              style={{ backgroundColor: "#25D366", color: "#fff" }}
+            >
+              Abrir WhatsApp
+            </a>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="reveal space-y-5">
@@ -804,7 +832,7 @@ function Reservation() {
               </div>
               <div>
                 <label className="block text-xs tracking-widest uppercase mb-2 font-light" style={{ color: "#C9A84C" }}>E-mail</label>
-                <input required style={inputStyle} type="email" placeholder="seu@email.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
+                <input style={inputStyle} type="email" placeholder="seu@email.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
               </div>
             </div>
 
@@ -867,52 +895,80 @@ function Reservation() {
 
 function Contact() {
   return (
-    <section style={{ backgroundColor: "#F8F3EE" }} className="py-20 px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            {
-              icon: <IconMapPin />,
-              title: "Endereço",
-              lines: ["Rua das Acácias, 150", "Jardins — São Paulo, SP"],
-            },
-            {
-              icon: <IconPhone />,
-              title: "Telefone & WhatsApp",
-              lines: ["(11) 3456-7890", "(11) 99876-5432"],
-            },
-            {
-              icon: <IconClock />,
-              title: "Horário de Funcionamento",
-              lines: ["Ter–Sex: 12h–15h | 19h–23h", "Sáb–Dom: 12h–23h"],
-            },
-          ].map(({ icon, title, lines }, i) => (
-            <div
-              key={title}
-              className="reveal text-center p-8 rounded-2xl"
-              style={{
-                backgroundColor: "#fff",
-                boxShadow: "0 4px 24px rgba(107,26,42,0.08)",
-                transitionDelay: `${i * 0.15}s`,
-              }}
+    <section id="contato" style={{ backgroundColor: "#F8F3EE" }} className="py-20 px-6">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div className="reveal">
+          <div className="flex items-center gap-3 mb-4" style={{ color: "#6B1A2A" }}>
+            <IconMapPin />
+            <p className="text-xs tracking-[0.3em] uppercase font-medium" style={{ color: "#C9A84C" }}>
+              Encontre a gente
+            </p>
+          </div>
+          <h2
+            className="text-3xl md:text-4xl font-bold mb-6"
+            style={{ fontFamily: "'Playfair Display', serif", color: "#4A1020" }}
+          >
+            Visite o Barão
+          </h2>
+          <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-lg bg-white" aria-label="Abrir endereço no Google Maps">
+            <iframe
+              title="Localização do Barão Gastronomia no Google Maps"
+              src={MAPS_EMBED_URL}
+              className="w-full aspect-[4/3] md:aspect-[5/4] border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </a>
+          <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="inline-block mt-4 text-sm font-medium hover:underline" style={{ color: "#6B1A2A" }}>
+            1 Av. Comendador Hermes Traldi, Jundiaí, São Paulo
+          </a>
+        </div>
+
+        <div className="reveal" style={{ transitionDelay: "0.15s" }}>
+          <p className="text-xs tracking-[0.3em] uppercase font-medium mb-4" style={{ color: "#C9A84C" }}>
+            Fale com a gente
+          </p>
+          <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-3">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 px-6 py-4 rounded-lg font-semibold transition-transform hover:-translate-y-0.5"
+              style={{ backgroundColor: "#25D366", color: "#fff" }}
             >
-              <div
-                className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"
-                style={{ backgroundColor: "#6B1A2A", color: "#F8F3EE" }}
-              >
-                {icon}
-              </div>
-              <h3
-                className="font-semibold mb-3"
-                style={{ fontFamily: "'Playfair Display', serif", color: "#4A1020", fontSize: "1.1rem" }}
-              >
-                {title}
+              <IconWhatsapp />
+              WhatsApp
+            </a>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 px-6 py-4 rounded-lg font-semibold transition-transform hover:-translate-y-0.5"
+              style={{ backgroundColor: "#6B1A2A", color: "#F8F3EE" }}
+            >
+              <IconInstagram />
+              Instagram
+            </a>
+          </div>
+
+          <div className="mt-10 pt-7" style={{ borderTop: "1px solid rgba(107,26,42,0.18)" }}>
+            <div className="flex items-center gap-3 mb-5" style={{ color: "#6B1A2A" }}>
+              <IconClock />
+              <h3 className="text-xl font-semibold" style={{ fontFamily: "'Playfair Display', serif", color: "#4A1020" }}>
+                Horário de funcionamento
               </h3>
-              {lines.map((l) => (
-                <p key={l} className="text-sm font-light" style={{ color: "#8a6060" }}>{l}</p>
-              ))}
             </div>
-          ))}
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div>
+                <p className="text-xs tracking-widest uppercase mb-1" style={{ color: "#8a6060" }}>Almoço</p>
+                <p className="text-lg font-medium" style={{ color: "#4A1020" }}>11:30 às 15:00</p>
+              </div>
+              <div>
+                <p className="text-xs tracking-widest uppercase mb-1" style={{ color: "#8a6060" }}>Jantar</p>
+                <p className="text-lg font-medium" style={{ color: "#4A1020" }}>17:30 às 22:00</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -935,29 +991,30 @@ function Footer() {
 
           {/* Links */}
           <div className="flex gap-6 flex-wrap justify-center">
-            {["Início", "Sobre", "Cardápio", "Galeria", "Reservas"].map((l) => (
+            {navigationLinks.map(({ label, href }) => (
               <a
-                key={l}
-                href={`#${l.toLowerCase().replace("ú", "u").replace("ó", "o").replace("é", "e")}`}
+                key={href}
+                href={href}
                 className="text-xs tracking-widest uppercase font-light hover:opacity-100 transition-opacity"
                 style={{ color: "rgba(248,243,238,0.5)" }}
               >
-                {l}
+                {label}
               </a>
             ))}
           </div>
 
           {/* Social */}
           <div className="flex gap-4">
-            {[
+            {[ 
               { icon: <IconInstagram />, label: "Instagram" },
-              { icon: <IconFacebook />, label: "Facebook" },
-              { icon: <IconWhatsapp />, label: "WhatsApp" },
+              { icon: <IconWhatsapp />, label: "WhatsApp", href: WHATSAPP_URL },
             ].map(({ icon, label }) => (
               <a
                 key={label}
-                href="#"
+                href={label === "WhatsApp" ? WHATSAPP_URL : "#"}
                 aria-label={label}
+                target={label === "WhatsApp" ? "_blank" : undefined}
+                rel={label === "WhatsApp" ? "noopener noreferrer" : undefined}
                 className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300"
                 style={{ border: "1px solid rgba(201,168,76,0.3)", color: "#C9A84C" }}
                 onMouseEnter={(e) => {
@@ -991,7 +1048,7 @@ function Footer() {
 function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/5511998765432"
+      href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-110"
