@@ -129,17 +129,20 @@ const menuItems = [
 const testimonials = [
   {
     name: "Fernanda Oliveira",
-    text: "Uma experiência gastronômica verdadeiramente inesquecível. O filé ao molho Barão é simplesmente divino. O ambiente, o serviço e a comida se complementam perfeitamente.",
+    city: "Jundiaí",
+    text: "O ambiente é acolhedor, a comida é saborosa e o atendimento deixa você à vontade desde a chegada. A costela e os vinhos foram destaque para a nossa visita.",
     stars: 5,
   },
   {
     name: "Ricardo Mendes",
-    text: "Visitei em comemoração ao nosso aniversário de casamento e superou todas as expectativas. Cada detalhe foi pensado com muito cuidado. Voltaremos com certeza!",
+    city: "Cabreúva",
+    text: "A experiência foi muito boa em todos os sentidos. Cada detalhe foi bem pensado, o restaurante tem uma atmosfera agradável e a comida realmente vale a pena.",
     stars: 5,
   },
   {
     name: "Camila Rocha",
-    text: "O melhor restaurante da cidade, sem dúvida. A carta de vinhos é excepcional e o sommelier fez recomendações perfeitas. Ambiente sofisticado e acolhedor.",
+    city: "Jundiaí",
+    text: "Fui com a família e amei o serviço, a variedade do menu e a qualidade dos pratos. Foi uma experiência muito agradável, com sabor e atenção que fazem diferença.",
     stars: 5,
   },
 ];
@@ -772,7 +775,7 @@ function Testimonials() {
                 </div>
                 <div>
                   <p className="font-semibold text-sm" style={{ color: "#F8F3EE" }}>{t.name}</p>
-                  <p className="text-xs font-light" style={{ color: "rgba(248,243,238,0.5)" }}>Cliente fiel</p>
+                  <p className="text-xs font-light" style={{ color: "rgba(248,243,238,0.5)" }}>{t.city}</p>
                 </div>
               </div>
             </div>
