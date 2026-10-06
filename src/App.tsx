@@ -459,7 +459,7 @@ function About() {
           </div>
 
           <p className="text-base leading-relaxed mb-5" style={{ color: "#5a3a3a", fontWeight: 300 }}>
-            Fundado em 2012, o Barão nasceu para reunir o melhor da comida de qualidade com o acolhimento de um restaurante de família. Aqui, o cuidado com os ingredientes e a atenção ao cliente fazem toda a diferença.
+            Barão nasceu para reunir o melhor da comida de qualidade com o acolhimento de um restaurante de família. Aqui, o cuidado com os ingredientes e a atenção ao cliente fazem toda a diferença.
           </p>
           <p className="text-base leading-relaxed mb-8" style={{ color: "#5a3a3a", fontWeight: 300 }}>
             Nosso ambiente é descontraído, acolhedor e cheio de personalidade. A comida é saborosa, bem preparada e servida com calor humano, criando momentos simples, especiais e memoráveis para todos.
