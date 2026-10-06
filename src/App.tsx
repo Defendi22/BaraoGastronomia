@@ -67,25 +67,61 @@ const menuItems = [
   {
     category: "Entradas",
     items: [
-      { name: "Carpaccio de Filé", desc: "Filé mignon fatiado finíssimo, rúcula selvagem, parmesão e azeite trufado", price: "R$ 68" },
-      { name: "Bruschetta ao Vinho", desc: "Pão artesanal grelhado, tomate confit, manjericão e redução de vinho tinto", price: "R$ 42" },
-      { name: "Ostras Frescas", desc: "Meia dúzia de ostras especiais com molho mignonette e limão siciliano", price: "R$ 98" },
+      {
+        name: "Mix de bolinhos",
+        desc: "O aperitivo perfeito com bolinhos de queijo, frango e carne. 15 unidades.",
+        price: "R$ 49",
+      },
+      {
+        name: "Bolinho de costela à bafo",
+        desc: "8 unidades.",
+        price: "R$ 42",
+      },
+      {
+        name: "Bolinho de bacalhau",
+        desc: "8 unidades.",
+        price: "R$ 38",
+      },
     ],
   },
   {
     category: "Pratos Principais",
     items: [
-      { name: "Filé ao Molho Barão", desc: "Medalhão de filé mignon grelhado, molho de vinho Malbec, purê trufado e aspargos", price: "R$ 148" },
-      { name: "Risoto de Camarão", desc: "Arroz arbóreo cremoso, camarões salteados, açafrão e parmesão 24 meses", price: "R$ 128" },
-      { name: "Peixe do Dia", desc: "Peixe fresco da temporada, legumes da estação e beurre blanc ao champagne", price: "R$ 118" },
+      {
+        name: "Lagareiro ao Murro Trás os Montes",
+        desc: "Lombo de bacalhau ao azeite, com batatinhas ao murro, alho confitado, cebola, ovos, azeitonas portuguesas e pimentão vermelho. Acompanha arroz e verdura.",
+        price: "R$ 335 por 2 pessoas",
+      },
+      {
+        name: "Costela à Bafo",
+        desc: "Costela assada lentamente por 10 horas, garantindo maciez, aroma e sabor. Servida com osso, acompanha farofa bijú, molho especial e guarnição à escolha.",
+        price: "a partir de R$ 145",
+      },
+      {
+        name: "Filé à parmegiana, costela assada, cupim assado, contra filé etc.",
+        desc: "Pratos executivos com opções variadas e sabor marcante.",
+        price: "a partir de R$ 40",
+      },
     ],
   },
   {
     category: "Sobremesas",
     items: [
-      { name: "Crème Brûlée", desc: "Clássico francês com crocante de açúcar caramelizado e fava de baunilha", price: "R$ 48" },
-      { name: "Chocolate Noir", desc: "Mousse de chocolate belga 70%, coulis de framboesa e sorvete de baunilha", price: "R$ 52" },
-      { name: "Petit Gâteau", desc: "Bolo quente de chocolate com coração derretido, servido com sorvete artesanal", price: "R$ 46" },
+      {
+        name: "Sorvete de creme especial com folhas de hortelã",
+        desc: "Sobremesa fresca, cremosa e delicada.",
+        price: "A consultar",
+      },
+      {
+        name: "Doces portugueses diversos",
+        desc: "Pastel de nata, Bola de Berlim, Brisa do Liz, pão de ló, Queijada de Sintra etc.",
+        price: "A consultar",
+      },
+      {
+        name: "Pudim de leite condensado",
+        desc: "Clássico, cremoso e irresistível.",
+        price: "A consultar",
+      },
     ],
   },
 ];
@@ -399,8 +435,8 @@ function About() {
             style={{ border: "2px solid #C9A84C", zIndex: 0 }}
           />
           <img
-            src="/images/chef.jpg"
-            alt="Chef Barão Gastronomia"
+            src="/images/Garçom apresenta bandeja de doces artesanais.png"
+            alt="Garçom sorridente do Barão Gastronomia"
             className="relative z-10 w-full h-[480px] object-cover rounded-2xl shadow-2xl"
           />
         </div>
@@ -431,9 +467,9 @@ function About() {
 
           <div className="grid grid-cols-3 gap-4">
             {[
-              { num: "12+", label: "Anos de história" },
-              { num: "40k+", label: "Clientes satisfeitos" },
-              { num: "5★", label: "Avaliação média" },
+              { num: "5+", label: "Anos de história" },
+              { num: "20k+", label: "Clientes satisfeitos" },
+              { num: "4.9★", label: "Avaliação média" },
             ].map(({ num, label }) => (
               <div key={label} className="text-center">
                 <p className="text-3xl font-bold" style={{ fontFamily: "'Playfair Display', serif", color: "#6B1A2A" }}>
@@ -625,12 +661,12 @@ function MenuPage({ onBack }: { onBack: () => void }) {
 
 function Gallery() {
   const images = [
-    { src: "https://images.pexels.com/photos/37968303/pexels-photo-37968303.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", alt: "Mesa elegante com velas" },
-    { src: "/images/galeria/dish1.jpg", alt: "Prato principal" },
-    { src: "https://images.pexels.com/photos/10075346/pexels-photo-10075346.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", alt: "Vinho sendo servido" },
-    { src: "/images/galeria/dish2.jpg", alt: "Entrada especial" },
-    { src: "https://images.pexels.com/photos/1872889/pexels-photo-1872889.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200", alt: "Ambiente do restaurante" },
-    { src: "/images/galeria/dish3.jpg", alt: "Sobremesa especial" },
+    { src: "/images/galeria/Vinhobarao.jpg", alt: "Vinho do Barão Gastronomia" },
+    { src: "/images/galeria/Parmegiana.jpeg", alt: "Parmegiana do Barão Gastronomia" },
+    { src: "/images/galeria/doces-portugueses-1-1.jpg.webp", alt: "Doces portugueses" },
+    { src: "/images/galeria/sorvetinho.jpeg", alt: "Sobremesa gelada do Barão Gastronomia" },
+    { src: "/images/galeria/Costela.jpeg", alt: "Costela do Barão Gastronomia" },
+    { src: "/images/galeria/Vinho Guaspari e Croquetes Dourados.png", alt: "Vinho e croquetes dourados" },
   ];
 
   return (
@@ -655,13 +691,13 @@ function Gallery() {
           {images.map((img, i) => (
             <div
               key={i}
-              className="reveal overflow-hidden rounded-xl group"
+              className="reveal overflow-hidden rounded-xl group aspect-square"
               style={{ transitionDelay: `${i * 0.1}s` }}
             >
               <img
                 src={img.src}
                 alt={img.alt}
-                className="w-full h-56 md:h-72 object-cover transition-transform duration-700 group-hover:scale-110"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
             </div>
           ))}
