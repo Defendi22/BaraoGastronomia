@@ -566,6 +566,26 @@ function Menu() {
         </div>
 
         <div className="text-center mt-12 reveal">
+          <a
+            href="https://cardapio-barao.onrender.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-8 py-4 mb-6 rounded-full text-sm tracking-widest uppercase font-medium transition-all duration-300"
+            style={{
+              border: "2px solid #C9A84C",
+              color: "#C9A84C",
+            }}
+            onMouseEnter={(e) => {
+              (e.target as HTMLElement).style.backgroundColor = "#C9A84C";
+              (e.target as HTMLElement).style.color = "#4A1020";
+            }}
+            onMouseLeave={(e) => {
+              (e.target as HTMLElement).style.backgroundColor = "transparent";
+              (e.target as HTMLElement).style.color = "#C9A84C";
+            }}
+          >
+            Ver Cardápio Completo
+          </a>
           <p className="text-sm font-light" style={{ color: "rgba(248,243,238,0.5)" }}>
             * Cardápio sujeito à sazonalidade dos ingredientes
           </p>
